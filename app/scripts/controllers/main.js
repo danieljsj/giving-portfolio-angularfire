@@ -12,6 +12,7 @@ angular.module('angularfireApp')
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
-      'Karma'
+      'Karma',
+      'Fish'
     ];
   });
