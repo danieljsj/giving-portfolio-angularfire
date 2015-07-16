@@ -14,12 +14,15 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
     // todo: implement "organizations" factory: https://www.firebase.com/docs/web/libraries/angular/guide/synchronized-objects.html
 
     // display any errors
-    $scope.organizations.$loaded().catch(alert);
+    $scope.organizations.$loaded(setYs).catch(alert);
+
 
     
-    $scope.$watch('organizations', function(oldOrganizations, newOrganizations){
-    	$scope.organizations.$save();
-    }, true); // http://stackoverflow.com/questions/14712089/how-to-deep-watch-an-array-in-angularjs
+
+
+
+
+
 
     // provide a method for adding a message
     $scope.addOrganization = function() {
@@ -32,8 +35,15 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
     $scope.incrementOrgPortion = function(org, delta){
     	if (! org.portion) org.portion = 0;
     	org.portion += delta;
+    	org.y = org.portion;
     	$scope.organizations.$save(org);
     }
+    $scope.$watch('organizations', function(oldOrganizations, newOrganizations){
+    	// currently we're coding "$save()" in everywhere
+    	// $scope.organizations.$save();
+    	setYs();
+    
+    }, true); // http://stackoverflow.com/questions/14712089/how-to-deep-watch-an-array-in-angularjs
 
     // $scope.removeOrg = function(org){
     // 	$scope.organizations.$remove(org); // just org.$remove() doesn't work, because it's the array that has to do the removing, I guess.
@@ -47,6 +57,11 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
     }
 
 
+    function setYs(){
+    	for (var i = $scope.organizations.length - 1; i >= 0; i--) {
+    		$scope.organizations[i].y = $scope.organizations[i].portion;
+    	};
+    }
 
 
 
@@ -78,20 +93,13 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
 	  },
 	  series: [
 	    {
-	    	name: "Giving",
-	      data: [
-			{ _id:123456, name:"WorldVision", y:13 },
-			{ _id:123456, name:"WorldVision", y:14 },
-			{ _id:123456, name:"WorldVision", y:13 },
-			{ _id:123456, name:"WorldVision", y:12 },
-			{ _id:123456, name:"WorldVision", y:20 },
-			{ _id:123456, name:"WorldVision", y:19 },
-			{ _id:123456, name:"WorldVision", y:15 },
-			{ _id:123456, name:"WorldVision", y:09 },
-			{ _id:123456, name:"WorldVision", y:20 },
-			{ _id:123456, name:"WorldVision", y:20 }
-	      ],
-	      id: "series-5"
+	      name: "Giving",
+	      data: $scope.organizations,
+	      id: "giving-data",
+	      animation: {
+            // duration: 1000
+            // nope; highcharts-ng updates using animation-noncompatible methods... :-(  http://stackoverflow.com/questions/30219869/highcharts-with-angularjs-smooth-transition-of-bars-when-updating-values#comment48611689_30249852
+          }
 	    }
 	  ],
 	  title: {
