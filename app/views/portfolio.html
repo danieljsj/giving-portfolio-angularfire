@@ -1,1 +1,36 @@
 <p>This is the portfolio view.</p>
+
+highchart:
+<highchart id="giving-chart" config="chartConfig"></highchart>
+
+org-list:
+<div id="org-list">
+	<div class="org" ng-repeat="org in organizations">
+		<button class="delete" ng-click="deleteOrganization(org._id)">
+			<span class="glyphicon glyphicon-remove"></span>
+		</button>
+		<input type="text" class="name" ng-model="org.name"></input>
+		<button class="decrease" ng-click="incrementOrgPortion(org,-5);">
+			<span></span>
+			<span></span>
+		</button>
+		<button class="decrease" ng-click="incrementOrgPortion(org,-1);">
+			&nbsp;<span></span>&nbsp;
+		</button>
+		<input class="portion" type="number" ng-model="org.portion"></button>
+		<button class="increase" ng-click="incrementOrgPortion(org,1);">
+			&nbsp;<span></span>&nbsp;
+		</button>
+		<button class="increase" ng-click="incrementOrgPortion(org,5)">
+			<span></span>
+			<span></span>
+		</button>
+	</div>
+</div>
+
+org-form:
+<div id="org-form">
+	<form>
+        <input type="submit" class="" ng-click="addOrganization()" value="+"></input>
+	</form>
+</div>
