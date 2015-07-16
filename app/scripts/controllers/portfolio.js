@@ -12,8 +12,15 @@ angular.module('angularfireApp')
     // synchronize a read-only, synchronized array of organizations, limit to most recent 10
     $scope.organizations = $firebaseArray(Ref.child('organizations').limitToLast(10));
 
+    // todo: implement "organizations" factory: https://www.firebase.com/docs/web/libraries/angular/guide/synchronized-objects.html
+
     // display any errors
     $scope.organizations.$loaded().catch(alert);
+
+    
+    $scope.$watch('organizations', function(oldOrganizations, newOrganizations){
+    	$scope.organizations.$save();
+    }, true); // http://stackoverflow.com/questions/14712089/how-to-deep-watch-an-array-in-angularjs
 
     // provide a method for adding a message
     $scope.addOrganization = function() {
@@ -21,6 +28,11 @@ angular.module('angularfireApp')
         $scope.organizations.$add({portion:1})
           // display any errors
           .catch(alert);
+    }
+
+    $scope.incrementOrgPortion = function(org, delta){
+    	org.portion += delta;
+    	$scope.organizations.$save(org);
     }
 
     function alert(msg) {

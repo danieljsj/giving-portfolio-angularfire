@@ -9,7 +9,7 @@ org-list:
 		<button class="delete" ng-click="deleteOrganization(org._id)">
 			<span class="glyphicon glyphicon-remove"></span>
 		</button>
-		<input type="text" class="name" ng-model="org.name"></input>
+		<input type="text" class="name" ng-model="org.name" ng-change="organizations.$save(org)"></input>
 		<button class="decrease" ng-click="incrementOrgPortion(org,-5);">
 			<span></span>
 			<span></span>
@@ -17,11 +17,11 @@ org-list:
 		<button class="decrease" ng-click="incrementOrgPortion(org,-1);">
 			&nbsp;<span></span>&nbsp;
 		</button>
-		<input class="portion" type="number" ng-model="org.portion"></button>
+		<input class="portion" type="number" ng-model="org.portion" ng-change="organizations.$save(org)"></button>
 		<button class="increase" ng-click="incrementOrgPortion(org,1);">
 			&nbsp;<span></span>&nbsp;
 		</button>
-		<button class="increase" ng-click="incrementOrgPortion(org,5)">
+		<button class="increase" ng-click="incrementOrgPortion(org,5);">
 			<span></span>
 			<span></span>
 		</button>
@@ -31,6 +31,6 @@ org-list:
 org-form:
 <div id="org-form">
 	<form>
-        <input type="submit" class="" ng-click="addOrganization()" value="+"></input>
+        <input type="submit" class="" ng-click="addOrganization();" value="+"></input>
 	</form>
 </div>
