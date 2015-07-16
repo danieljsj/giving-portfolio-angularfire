@@ -1,0 +1,94 @@
+/********* OLDER ************/
+
+
+/* General */
+html { 
+	overflow-y:scroll; 
+}
+body { 
+	padding-top:50px; 
+}
+* {
+	vertical-align: middle; 
+}
+
+
+#org-list,
+#org-list .org {
+	@extend .text-center;
+	@extend .row;
+}
+
+/* Pretty Buttons */
+.org { 
+	margin-bottom: 10px;
+}
+.org .name, 
+.org .portion { 
+	width: 200px; 
+	display: inline-block;
+	font-weight: bold;
+	font-size:1.5em;
+}
+.org .btn.delete { 
+	margin-right:30px;
+}
+.org .name { 
+	margin-right:10px;
+}
+.org .portion { 
+	width: 50px;
+	text-align: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none;   <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+
+
+
+
+/********** NEWER *************/
+
+
+/*  http://ely-s.github.io/mixin/  this is cool, but isnt needed if all I want to do is extend */
+
+
+/*  https://coderwall.com/p/wixovg/bootstrap-without-all-the-debt  -> use @extend! yes... */
+
+button {
+	@extend .btn;
+}
+button.increase {
+	@extend .btn-success;
+	span {
+		@extend .glyphicon, .glyphicon-plus;
+	}
+}
+button.decrease {
+	@extend .btn-warning;
+	span {
+		@extend .glyphicon, .glyphicon-minus;
+	}
+}
+button.delete {
+	@extend .btn-danger;
+}
+#org-form {
+	@extend .row, .text-center;
+	input[type="submit"] {
+		@extend .btn, .btn-primary, .btn-lg, .glyphicon;
+	}
+}
+
+
+#pieChart {
+	min-width: 310px;
+	max-width: 600px;
+	height: 400px;
+	margin: 0 auto
+}
