@@ -6,7 +6,7 @@ highchart:
 org-list:
 <div id="org-list">
 	<div class="org" ng-repeat="org in organizations">
-		<button class="delete" ng-click="deleteOrganization(org._id)">
+		<button class="delete" ng-click="organizations.$remove(org);">
 			<span class="glyphicon glyphicon-remove"></span>
 		</button>
 		<input type="text" class="name" ng-model="org.name" ng-change="organizations.$save(org)"></input>

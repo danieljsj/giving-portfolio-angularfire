@@ -25,15 +25,20 @@ angular.module('angularfireApp')
     // provide a method for adding a message
     $scope.addOrganization = function() {
         // push an organization to the end of the array
-        $scope.organizations.$add({portion:1})
+        $scope.organizations.$add({name:1})
           // display any errors
           .catch(alert);
     }
 
     $scope.incrementOrgPortion = function(org, delta){
+    	if (! org.portion) org.portion = 0;
     	org.portion += delta;
     	$scope.organizations.$save(org);
     }
+
+    // $scope.removeOrg = function(org){
+    // 	$scope.organizations.$remove(org); // just org.$remove() doesn't work, because it's the array that has to do the removing, I guess.
+    // }
 
     function alert(msg) {
       $scope.err = msg;
