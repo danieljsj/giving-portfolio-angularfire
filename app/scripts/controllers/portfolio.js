@@ -14,7 +14,7 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
     // todo: implement "organizations" factory: https://www.firebase.com/docs/web/libraries/angular/guide/synchronized-objects.html
 
     // display any errors
-    $scope.organizations.$loaded(setYs).catch(alert);
+    $scope.organizations.$loaded(initChart).catch(alert); // initchart can still sees the $scope and stuff, but not individual vars
 
 
     
@@ -59,22 +59,13 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
 
 
 
-
-
-    function setYs(){
-    	for (var i = $scope.organizations.length - 1; i >= 0; i--) {
-    		$scope.organizations[i].y = $scope.organizations[i].portion;
-    	};
-    }
-
-
-
     var highchartConfig = {
         // in highcharts-ng, this is nested in an 'options: {...}' object
         chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
+            renderTo: 'giving-chart',
+            // plotBackgroundColor: null,
+            // plotBorderWidth: null,
+            // plotShadow: false,
             type: 'pie'
         },
         plotOptions: {
@@ -106,31 +97,35 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
               // }
             }
           ],
-          title: {
+        title: {
             text: "My Giving Portfolio"
           },
-          credits: {
+        credits: {
             enabled: false
           },
-          loading: false,
-          size: {},
-          subtitle: {
+        loading: false,
+        size: {},
+        subtitle: {
             text: "Giving is Investing - Diversify Your Porfolio!"
           }
     };
 
 
-    setInterval(function () { 
-        $('#giving-chart').highcharts(highchartConfig);
-    }, 1000);
 
-    // $();
+    $scope.givingChart = new Highcharts.Chart(highchartConfig);
+    console.log($scope.givingChart);
 
-
-
-	
-
-
+    function initChart(){
+        setYs();
+        console.log($scope.givingChart);
+        $scope.givingChart.series[0].setData($scope.organizations);
+    }
+    function setYs(){
+        for (var i = $scope.organizations.length - 1; i >= 0; i--) {
+            $scope.organizations[i].y = $scope.organizations[i].portion;
+        };
+        $scope.givingChart.series[0].setData($scope.organizations);
+    }
 
 
   });
