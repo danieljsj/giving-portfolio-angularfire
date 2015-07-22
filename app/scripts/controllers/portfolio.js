@@ -14,7 +14,7 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
     // todo: implement "organizations" factory: https://www.firebase.com/docs/web/libraries/angular/guide/synchronized-objects.html
 
     // display any errors
-    $scope.organizations.$loaded(initChart).catch(alert); // initchart can still sees the $scope and stuff, but not individual vars
+    $scope.organizations.$loaded(initChart).catch(alert); // callback func can still sees the $scope and stuff (why?), but not individual vars declared in here.
 
 
     
@@ -91,12 +91,18 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
             {
               name: "Giving",
               data: $scope.organizations,
-              id: "giving-data"
+              id: "giving-data",
               // ,
               // animation: {
                 // duration: 1000
                 // nope; highcharts-ng updates using animation-noncompatible methods... :-(  http://stackoverflow.com/questions/30219869/highcharts-with-angularjs-smooth-transition-of-bars-when-updating-values#comment48611689_30249852
               // }
+              point: {
+                    events: {
+                        select: function(){console.log(this)},
+                        // unselect: function(){console.log(this)}
+                    }
+              }
             }
           ],
         title: {
