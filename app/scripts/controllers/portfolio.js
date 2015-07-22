@@ -95,11 +95,12 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
 	    {
 	      name: "Giving",
 	      data: $scope.organizations,
-	      id: "giving-data",
-	      animation: {
+	      id: "giving-data"
+	      // ,
+	      // animation: {
             // duration: 1000
             // nope; highcharts-ng updates using animation-noncompatible methods... :-(  http://stackoverflow.com/questions/30219869/highcharts-with-angularjs-smooth-transition-of-bars-when-updating-values#comment48611689_30249852
-          }
+          // }
 	    }
 	  ],
 	  title: {
