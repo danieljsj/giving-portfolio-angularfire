@@ -68,85 +68,69 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
     }
 
 
-    $(function () { 
-        $('#giving-chart').highcharts({ // TODO: make this use actual data...
-            chart: {
-                type: 'bar'
-            },
-            title: {
-                text: 'Fruit Consumption'
-            },
-            xAxis: {
-                categories: ['Apples', 'Bananas', 'Oranges']
-            },
-            yAxis: {
-                title: {
-                    text: 'Fruit eaten'
+
+    var highchartConfig = {
+        // in highcharts-ng, this is nested in an 'options: {...}' object
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
                 }
-            },
-            series: [{
-                name: 'Jane',
-                data: [1, 0, 4]
-            }, {
-                name: 'John',
-                data: [5, 7, 3]
-            }]
-        });
-    });
+            }
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        // end of highcharts-ng 'options: {...}' object
+        series: [
+            {
+              name: "Giving",
+              data: $scope.organizations,
+              id: "giving-data"
+              // ,
+              // animation: {
+                // duration: 1000
+                // nope; highcharts-ng updates using animation-noncompatible methods... :-(  http://stackoverflow.com/questions/30219869/highcharts-with-angularjs-smooth-transition-of-bars-when-updating-values#comment48611689_30249852
+              // }
+            }
+          ],
+          title: {
+            text: "My Giving Portfolio"
+          },
+          credits: {
+            enabled: false
+          },
+          loading: false,
+          size: {},
+          subtitle: {
+            text: "Giving is Investing - Diversify Your Porfolio!"
+          }
+    };
+
+
+    setInterval(function () { 
+        $('#giving-chart').highcharts(highchartConfig);
+    }, 1000);
+
+    // $();
+
+
+
+	
 
 
 
 
-
-
-
-	// $scope.chartConfig = {
-	//   options: {
-	//     chart: {
- //            plotBackgroundColor: null,
- //            plotBorderWidth: null,
- //            plotShadow: false,
- //            type: 'pie'
-	//     },
-	//     plotOptions: {
- //            pie: {
- //                allowPointSelect: true,
- //                cursor: 'pointer',
- //                dataLabels: {
- //                    enabled: true,
- //                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
- //                    style: {
- //                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
- //                    }
- //                }
- //            }
-	//     },
-	// 	tooltip: {
- //            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
- //        }
-	//   },
-	//   series: [
-	//     {
-	//       name: "Giving",
-	//       data: $scope.organizations,
-	//       id: "giving-data"
-	//       // ,
-	//       // animation: {
- //            // duration: 1000
- //            // nope; highcharts-ng updates using animation-noncompatible methods... :-(  http://stackoverflow.com/questions/30219869/highcharts-with-angularjs-smooth-transition-of-bars-when-updating-values#comment48611689_30249852
- //          // }
-	//     }
-	//   ],
-	//   title: {
-	//     text: "My Giving Portfolio"
-	//   },
-	//   credits: {
-	//     enabled: false
-	//   },
-	//   loading: false,
-	//   size: {},
-	//   subtitle: {
-	//     text: "Giving is Investing - Diversify Your Porfolio!"
-	//   }
-	// }
   });
