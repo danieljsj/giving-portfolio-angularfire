@@ -78,7 +78,9 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
                     style: {
                         color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                     }
-                }
+                },
+                center: ["50%","50%"],
+                size: "75%"
             }
         },
         tooltip: {
