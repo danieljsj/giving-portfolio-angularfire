@@ -1,6 +1,28 @@
 <highchart id="giving-chart" config="chartConfig"></highchart>
 
 <div id="org-list">
+	<div class="org">
+		<button class="delete" ng-click="organizations.$remove(selectedOrg);">
+			<span class="glyphicon glyphicon-remove"></span>
+		</button>
+		<input type="text" class="name" ng-model="selectedOrg.name" ng-change="organizations.$save(selectedOrg)"></input>
+		<button class="decrease" ng-click="incrementOrgPortion(selectedOrg,-5);">
+			<span></span>
+			<span></span>
+		</button>
+		<button class="decrease" ng-click="incrementOrgPortion(selectedOrg,-1);">
+			&nbsp;<span></span>&nbsp;
+		</button>
+		<input class="portion" type="number" ng-model="selectedOrg.portion" ng-change="organizations.$save(selectedOrg)"></button>
+		<button class="increase" ng-click="incrementOrgPortion(selectedOrg,1);">
+			&nbsp;<span></span>&nbsp;
+		</button>
+		<button class="increase" ng-click="incrementOrgPortion(selectedOrg,5);">
+			<span></span>
+			<span></span>
+		</button>
+	</div>
+	<!-- <hr>
 	<div class="org" ng-repeat="org in organizations">
 		<button class="delete" ng-click="organizations.$remove(org);">
 			<span class="glyphicon glyphicon-remove"></span>
@@ -21,7 +43,7 @@
 			<span></span>
 			<span></span>
 		</button>
-	</div>
+	</div> -->
 </div>
 <div id="org-form">
 	<form>

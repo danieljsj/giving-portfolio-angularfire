@@ -27,16 +27,19 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
     // provide a method for adding a message
     $scope.addOrganization = function() {
         // push an organization to the end of the array
-        $scope.organizations.$add({name:1})
+        $scope.organizations.$add({
+            name:" ",
+            portion:0
+          })
           // display any errors
           .catch(alert);
     }
-    function alert(msg) {
-      $scope.err = msg;
-      $timeout(function() {
-        $scope.err = null;
-      }, 5000);
-    }
+    // function alert(msg) { // not sure what the point of scope.err is, but it wasn't doing anything, so I'm making it go back to normal alerts for now.
+    //   $scope.err = msg;
+    //   $timeout(function() {
+    //     $scope.err = null;
+    //   }, 5000);
+    // }
 
 
     $scope.incrementOrgPortion = function(org, delta){
@@ -99,7 +102,23 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
               // }
               point: {
                     events: {
-                        select: function(){console.log(this)},
+                        select: function(){
+                            console.log(this);
+                            for (var i = $scope.organizations.length - 1; i >= 0; i--) {
+                                var scopeOrg = $scope.organizations[i];
+                                if ( scopeOrg.$id == this.$id){
+                                    $scope.selectedOrg = $scope.organizations[i];
+                                    $scope.$apply();
+                                    break;
+                                }
+                            };
+                            // for (var i = $scope.organizations.length - 1; i >= 0; i--) {
+                            //     if ($scope.organizations[i] === this){
+                            //         console.log('whoah, exact match!'); // no exact matches. which makes sense; some are points, others are firebase array elements
+                            //         break;
+                            //     }
+                            // };
+                        }
                         // unselect: function(){console.log(this)}
                     }
               }
@@ -131,6 +150,7 @@ angular.module('angularfireApp'/*, ['highcharts-ng'] NO! https://docs.angularjs.
     function setYs(){
         for (var i = $scope.organizations.length - 1; i >= 0; i--) {
             $scope.organizations[i].y = $scope.organizations[i].portion;
+            console.log($scope.organizations[i]);
         };
         $scope.givingChart.series[0].setData($scope.organizations);
     }
